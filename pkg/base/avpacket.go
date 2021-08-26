@@ -33,8 +33,8 @@ func (a AvPacketPt) ReadableString() string {
 		return "avc"
 	case AvPacketPtHevc:
 		return "hevc"
-	case AvPacketPtAac:
-		return "aac"
+	//case AvPacketPtAac:
+	//	return "aac"
 	}
 	return ""
 }

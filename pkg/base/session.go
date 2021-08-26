@@ -82,10 +82,10 @@ type IClientSessionLifecycle interface {
 }
 
 type IServerSessionLifecycle interface {
-	// 开启session的事件循环，阻塞直到session结束
+	// RunLoop 开启session的事件循环，阻塞直到session结束
 	RunLoop() error
 
-	// 主动关闭session时调用
+	// Dispose 主动关闭session时调用
 	//
 	// 如果是session通知业务方session已关闭（比如`RunLoop`函数返回错误），则不需要调用`Dispose` TODO(chef): review现状
 	//
@@ -94,17 +94,17 @@ type IServerSessionLifecycle interface {
 
 // 调用约束：对于Client类型的Session，调用Start函数并返回成功后才能调用，否则行为未定义
 type ISessionStat interface {
-	// 周期性调用该函数，用于计算bitrate
+	// UpdateStat 周期性调用该函数，用于计算bitrate
 	//
 	// @param intervalSec 距离上次调用的时间间隔，单位毫秒
 	UpdateStat(intervalSec uint32)
 
-	// 获取session状态
+	// GetStat 获取session状态
 	//
 	// @return 注意，结构体中的`Bitrate`的值由最近一次`func UpdateStat`调用计算决定，其他值为当前最新值
 	GetStat() StatSession
 
-	// 周期性调用该函数，判断是否有读取、写入数据
+	// IsAlive 周期性调用该函数，判断是否有读取、写入数据
 	// 注意，判断的依据是，距离上次调用该函数的时间间隔内，是否有读取、写入数据
 	// 注意，不活跃，并一定是链路或网络有问题，也可能是业务层没有写入数据
 	//

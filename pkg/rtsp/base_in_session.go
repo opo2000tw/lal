@@ -29,7 +29,7 @@ import (
 
 // 聚合PubSession和PullSession，也即流数据是输入类型的session
 
-// BaseInSession会向上层回调两种格式的数据(本质上是一份数据，业务方可自由选择使用)：
+// BaseInSessionObserver BaseInSession会向上层回调两种格式的数据(本质上是一份数据，业务方可自由选择使用)：
 // 1. 原始的rtp packet
 // 2. rtp合并后的av packet
 //
