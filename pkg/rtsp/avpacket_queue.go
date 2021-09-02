@@ -65,19 +65,19 @@ func (a *AvPacketQueue) Feed(pkt base.AvPacket) {
 		pkt.Timestamp -= uint32(a.videoBaseTs)
 
 		_ = a.videoQueue.PushBack(pkt)
-	case base.AvPacketPtAac:
-		if int64(pkt.Timestamp) < a.audioBaseTs {
-			nazalog.Warnf("audio ts rotate. pktTS=%d, audioBaseTs=%d, videoBaseTs=%d, audioQueue=%d, videoQueue=%d",
-				pkt.Timestamp, a.audioBaseTs, a.videoBaseTs, a.audioQueue.Size(), a.videoQueue.Size())
-			a.videoBaseTs = -1
-			a.audioBaseTs = -1
-			a.PopAllByForce()
-		}
-		if a.audioBaseTs == -1 {
-			a.audioBaseTs = int64(pkt.Timestamp)
-		}
-		pkt.Timestamp -= uint32(a.audioBaseTs)
-		_ = a.audioQueue.PushBack(pkt)
+		//case base.AvPacketPtAac:
+		//	if int64(pkt.Timestamp) < a.audioBaseTs {
+		//		nazalog.Warnf("audio ts rotate. pktTS=%d, audioBaseTs=%d, videoBaseTs=%d, audioQueue=%d, videoQueue=%d",
+		//			pkt.Timestamp, a.audioBaseTs, a.videoBaseTs, a.audioQueue.Size(), a.videoQueue.Size())
+		//		a.videoBaseTs = -1
+		//		a.audioBaseTs = -1
+		//		a.PopAllByForce()
+		//	}
+		//	if a.audioBaseTs == -1 {
+		//		a.audioBaseTs = int64(pkt.Timestamp)
+		//	}
+		//	pkt.Timestamp -= uint32(a.audioBaseTs)
+		//	_ = a.audioQueue.PushBack(pkt)
 	}
 
 	// 如果音频和视频都存在，则按序输出，直到其中一个为空
