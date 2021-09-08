@@ -25,3 +25,6 @@ lal_record
 
 /.idea
 /.vscode
+
+# go command generate
+vendor
